@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,9 +19,11 @@ export class LandingPageComponent implements OnInit {
     this.router.navigateByUrl('facesnaps');
   }
 
-  onSubmitForm(): void{
+  onSubmitForm(emailForm: NgForm): void{
     console.log('====================================');
-    console.log(this.userEmail);
+    console.log(emailForm.value);
+
+    console.log("juste la valeur de la propriete userEmail : "+ emailForm.controls['userEmail'].value);
     console.log('====================================');
   }
 
