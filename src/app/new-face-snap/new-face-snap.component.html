@@ -18,7 +18,7 @@
             <input type="text" id="location" formControlName="location">
         </div>
         <div class="action-buttons">
-            <button type="submit" (click)="onSubmitForm()">Save</button>
+            <button type="submit" (click)="onSubmitForm()" [disabled]="snapform.invalid">Save</button>
         </div>
     </form>
 </div>
