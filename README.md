@@ -63,4 +63,14 @@ return this.getAllFaceSnaps().pipe(
 
     );
 ```
+Les méthodes  put()  et  post()  de HttpClient prennent l'URL de la requête comme premier argument, et le corps à envoyer comme deuxième argument ;
+
+Vous créez une requête composée lorsque la réponse d'une requête est utilisée pour en créer une autre ;
+
+Attention à l'asynchrone ! Si une action doit être effectuée après une requête, utilisez des opérateurs comme  tap()  dans le  pipe  de la requête ;
+
+Quand une méthode de service génère une requête, le best practice est de retourner l'Observable et d'y souscrire depuis le component.
+
+
+
 TAP : opérateur side effact.
