@@ -104,7 +104,7 @@ export class FaceSnapsService {
       })),
       switchMap(newFaceSnap => this.http.post<FaceSnap>('http://localhost:3000/facesnaps', newFaceSnap))
 
-    )
+    );
 /*     const newFaceSnaps : FaceSnap ={
       ...formValue,
       snaps : 0,

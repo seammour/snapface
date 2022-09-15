@@ -32,9 +32,35 @@ ils se contentent d'afficher les données qu'on leur donne.
 Pour le "snap"
 
 
-
+```TypeScript 
+    return this.getFaceSnapById(faceSnapId).pipe(
+      map(faceSnap => ({
+        ...faceSnap,
+        snaps: faceSnap.snaps + (snapType === 'snap' ? 1 : -1)
+      })),
+      switchMap(upadtedFaceSnap => this.http.put<FaceSnap>(`http://localhost:3000/facesnaps/${faceSnapId}`, upadtedFaceSnap))
+    );
+```
 ## requete POST
-Pour la création du nouveau FaceSnap
+Pour la création d'un nouveau FaceSnap
 
+```TypeScript 
+return this.getAllFaceSnaps().pipe(
+      // trie un clone de tableau de faceSnap par ordre croissant des ids
+      map(facesnaps => [ ...facesnaps].sort((a,b) => a.id - b.id)),
+      //map(facesnaps.sort((a,b) => a.id - b.id)),
+      // renvoyer le dernier FaceSnap
+      map(sortedFaceSnaps => sortedFaceSnaps[sortedFaceSnaps.length -1]),
+      // reconstruire le nouveau tableu des facesnaps
+      map(previewsFaceSnaps => ({
+        ...formValue,
+        snaps:0,
+        createdDate: new Date(),
+        id: previewsFaceSnaps.id +1
+      })),
+      // operateur haut niveau app
+      switchMap(newFaceSnap => this.http.post<FaceSnap>('http://localhost:3000/facesnaps', newFaceSnap))
 
+    );
+```
 TAP : opérateur side effact.
