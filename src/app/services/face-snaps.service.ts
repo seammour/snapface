@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { FaceSnap } from '../models/face-snap.model';
 
 @Injectable({
@@ -69,18 +70,20 @@ export class FaceSnapsService {
     //return this.faceSnaps;
   }
 
-  getFaceSnapById(faceSnapId: number): FaceSnap {
-    const faceSnap = this.faceSnaps.find(faceSnap => faceSnap.id === faceSnapId);
+  getFaceSnapById(faceSnapId: number): Observable<FaceSnap> {
+    // une petite attention les backquote sont necesaaires pour interpreter la variable faceSnapId
+    return this.http.get<FaceSnap>(`http://localhost:3000/facesnaps/${faceSnapId}`);
+    /* const faceSnap = this.faceSnaps.find(faceSnap => faceSnap.id === faceSnapId);
     if (!faceSnap) {
       throw new Error('FaceSnap not found!');
     } else {
       return faceSnap;
-    }
+    } */
   }
 
   snapFaceSnapById(faceSnapId: number, snapType: 'snap' | 'unsnap'): void {
-    const faceSnap = this.getFaceSnapById(faceSnapId);
-    snapType === 'snap' ? faceSnap.snaps++ : faceSnap.snaps--;
+    /* const faceSnap = this.getFaceSnapById(faceSnapId);
+    snapType === 'snap' ? faceSnap.snaps++ : faceSnap.snaps--; */
   }
 
   addFaceSnap(formValue : {title: string, description: string, imageUrl: string, location: string}){
