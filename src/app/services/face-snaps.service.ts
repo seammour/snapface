@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { FaceSnap } from '../models/face-snap.model';
 
 @Injectable({
@@ -81,19 +82,35 @@ export class FaceSnapsService {
     } */
   }
 
-  snapFaceSnapById(faceSnapId: number, snapType: 'snap' | 'unsnap'): void {
-    /* const faceSnap = this.getFaceSnapById(faceSnapId);
-    snapType === 'snap' ? faceSnap.snaps++ : faceSnap.snaps--; */
+  snapFaceSnapById(faceSnapId: number, snapType: 'snap' | 'unsnap'): Observable<FaceSnap> {
+    return this.getFaceSnapById(faceSnapId).pipe(
+      map(faceSnap => ({
+        ...faceSnap,
+        snaps: faceSnap.snaps + (snapType === 'snap' ? 1 : -1)
+      })),
+      switchMap(upadtedFaceSnap => this.http.put<FaceSnap>(`http://localhost:3000/facesnaps/${faceSnapId}`, upadtedFaceSnap))
+    );
   }
 
-  addFaceSnap(formValue : {title: string, description: string, imageUrl: string, location: string}){
-    const newFaceSnaps : FaceSnap ={
+  addFaceSnap(formValue : {title: string, description: string, imageUrl: string, location: string}) : Observable<FaceSnap>{
+    return this.getAllFaceSnaps().pipe(
+      map(facesnaps => [ ...facesnaps].sort((a,b) => a.id - b.id)),
+      map(sortedFaceSnaps => sortedFaceSnaps[sortedFaceSnaps.length -1]),
+      map(previewsFaceSnaps => ({
+        ...formValue,
+        snaps:0,
+        createdDate: new Date(),
+        id: previewsFaceSnaps.id +1
+      })),
+      switchMap(newFaceSnap => this.http.post<FaceSnap>('http://localhost:3000/facesnaps', newFaceSnap))
+
+    )
+/*     const newFaceSnaps : FaceSnap ={
       ...formValue,
       snaps : 0,
       createdDate : new Date(),
       id: this.faceSnaps[this.faceSnaps.length - 1].id + 1
-      
     };
-    this.faceSnaps.push(newFaceSnaps);
+    this.faceSnaps.push(newFaceSnaps); */
   }
 }

@@ -13,8 +13,9 @@ Le formulaire est simple et donc en utilisant le two-way binding sur un champ pe
 ## Formulaire Reactive
 
 # Communication  Backend avec HttpClient
-## import du HttpClientModule
-## injecter le HttpClient
+## requete GET
+### import du HttpClientModule
+### injecter le HttpClient
 - l'utilisation du get
     this.http.get<FaceSnap[]>('http://localhost:3000/facesnaps')
 - le resultat de retour est un observable de FaceSnap[]
@@ -27,3 +28,13 @@ il s'agit du container, ou du component smart ;
 les dumbs ou presenters qui n'interagissent pas avec les services ; 
 ils se contentent d'afficher les données qu'on leur donne.
 
+## requete PUT
+Pour le "snap"
+
+
+
+## requete POST
+Pour la création du nouveau FaceSnap
+
+
+TAP : opérateur side effact.
