@@ -73,4 +73,7 @@ Quand une méthode de service génère une requête, le best practice est de ret
 
 
 
-TAP : opérateur side effact.
+> [!NOTE]
+> TAP : opérateur side effact.
+
+
