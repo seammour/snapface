@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { FaceSnap } from '../models/face-snap.model';
+import { FaceSnap } from '../core/models/face-snap.model';
 
 @Injectable({
   providedIn: 'root'
