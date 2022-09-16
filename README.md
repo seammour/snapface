@@ -76,4 +76,44 @@ Quand une méthode de service génère une requête, le best practice est de ret
 > [!NOTE]
 > TAP : opérateur side effact.
 
+# Intercepteur
+Un intercepteur est une classe TypeScript qui implémente l'interface HttpInterceptor et qui comporte le décorateur  @Injectable()  .
+Les intercepteurs sont enregistrés différemment des services, donc n'ajoutez surtout pas  { providedIn: 'root' }  au décorateur !
 
+## Creation
+```TypeScript 
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private authService: AuthService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // ajouter dans la properité Authorization token 
+    const headers = new HttpHeaders()
+      .append('Authorization', `Bearer ${this.authService.getToken()}`);
+    // les paramères red, next sont immutable et donc pour modifier le header des requettes
+    // on doit la cloner puis injecter le header voulue
+    const modifiedReq = req.clone({ headers });
+    // retoruner la vouvelle requette ce qui permet à la requette de continuer son chemin
+    return next.handle(modifiedReq);
+  }
+}
+```
+
+## Enregistrez l'intercepteur
+
+index.ts pour enregisterer tous les intercepteurs de l'application
+```TypeScript 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+];
+```
+puis le declarer avec les providers du module 
