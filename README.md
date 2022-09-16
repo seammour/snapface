@@ -129,3 +129,9 @@ ce type de module contient tout ce que l'on importe une seule fois dans applicat
 
 ## shared modules : 
 ce sont des modules qui regroupent des éléments utilisés à plusieurs endroits de l'application – il importe et déclare tous ces éléments et les réexporte, permettant à n'importe quel module de tout importer d'un coup.
+
+
+Un module doit importer tout ce dont il a besoin pour générer ses enfants. Par exemple, si un component qu'il déclare contient un formulaire réactif, il devra importer ReactiveFormsModule ;
+
+Si un component déclaré par un module enfant est utilisé dans un module parent, le module enfant doit exporter ce component.
+
