@@ -6,10 +6,8 @@ import { NewFaceSnapComponent } from './face-snaps/components/new-face-snap/new-
 import { SingleFaceSnapComponent } from './face-snaps/components/single-face-snap/single-face-snap.component';
 
 const routes: Routes = [
-  { path: 'facesnaps/:id', component: SingleFaceSnapComponent },
-  { path: 'facesnaps', component: FaceSnapListComponent },
-  { path: 'create', component: NewFaceSnapComponent },
-  { path: '', component: LandingPageComponent }
+  { path: 'facesnaps', loadChildren: () => import('./face-snaps/face-snaps.module').then(m=> m.FaceSnapsModule)},
+ { path: '', component: LandingPageComponent }
 ];
 
 @NgModule({

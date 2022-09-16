@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { LandingPageModule } from './landing-page/components/landing-page.module';
-import { FaceSnapsModule } from './face-snaps/face-snaps.module';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { FaceSnapsModule } from './face-snaps/face-snaps.module';
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    LandingPageModule,
-    FaceSnapsModule
+    LandingPageModule    
   ],
   bootstrap: [AppComponent]
 })
