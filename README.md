@@ -135,3 +135,38 @@ Un module doit importer tout ce dont il a besoin pour générer ses enfants. Par
 
 Si un component déclaré par un module enfant est utilisé dans un module parent, le module enfant doit exporter ce component.
 
+# Lazy Loading 
+
+## délégué les routes facesnaps (getall, :id, create) au FaceSnapsModule
+```TypeScript 
+{ path: 'facesnaps', loadChildren: () => import('./face-snaps/face-snaps.module').then(m=> m.FaceSnapsModule)},
+```
+
+## deplacer les routes facesnaps FaceSnapsRoutingModule
+```TypeScript 
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { FaceSnapListComponent } from "./components/face-snap-list/face-snap-list.component";
+import { NewFaceSnapComponent } from "./components/new-face-snap/new-face-snap.component";
+import { SingleFaceSnapComponent } from "./components/single-face-snap/single-face-snap.component";
+
+// declarer les routes du module
+const routes: Routes = [
+  { path: 'create', component: NewFaceSnapComponent },
+  { path: ':id', component: SingleFaceSnapComponent },
+  { path: '', component: FaceSnapListComponent }
+]
+
+@NgModule({
+
+  // importer le routeModule avec forChild au lieu forRoot
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+    // importer le routeModule avec forChild au lieu forRoot
+  exports: [
+    RouterModule
+  ]
+})
+export class FaceSnapsRoutingModule { }
+```
