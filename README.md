@@ -170,3 +170,7 @@ const routes: Routes = [
 })
 export class FaceSnapsRoutingModule { }
 ```
+## Vérifier le resultat
+Dans le l'onglet network puis le filtre JS 
+![](src/img/debugLazyloading.png)
+Ò
